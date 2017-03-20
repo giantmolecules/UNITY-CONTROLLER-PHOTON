@@ -57,9 +57,7 @@ public class oscControl : MonoBehaviour {
 					                                    item.Key, // Server name
 					                                    item.Value.packets [lastPacketIndex].Address, // OSC address
 					                                    item.Value.packets [lastPacketIndex].Data [0].ToString ())); //First data value
-					
-				//converts the values into MIDI to scale the cube
-				//float tempVal = float.Parse (item.Value.packets [lastPacketIndex].Data [0].ToString ());
+
 			}
 		}
 	}
