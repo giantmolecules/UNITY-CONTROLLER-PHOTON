@@ -32,6 +32,12 @@ public class oscControl : MonoBehaviour {
 	public string OSCClientName;
 	public int OSCClientPort;
 	public string OSCClientIP;
+
+	public string lightVal;
+	public  string tempVal;
+	public string pirVal;
+
+	private Renderer rend;
 	
 	private Dictionary<string, ServerLog> servers;
 
@@ -39,6 +45,7 @@ public class oscControl : MonoBehaviour {
 	void Start() {	
 		OSCHandler.Instance.Init(OSCServerName, OSCServerPort, OSCClientName, OSCClientIP, OSCClientPort); //init OSC
 		servers = new Dictionary<string, ServerLog>();
+		rend = GetComponent<Renderer> ();
 	}
 		
 	void Update() {
@@ -52,12 +59,26 @@ public class oscControl : MonoBehaviour {
 			// show the last received from the log in the Debug console
 			if (item.Value.log.Count > 0) {
 				int lastPacketIndex = item.Value.packets.Count - 1;
+				Debug.Log ("lastPacketIndex: " + lastPacketIndex.ToString());
 				Debug.Log ("HEY");
-				UnityEngine.Debug.Log (String.Format ("SERVER: {0} ADDRESS: {1} VALUE : {2}", 
-					                                    item.Key, // Server name
-					                                    item.Value.packets [lastPacketIndex].Address, // OSC address
-					                                    item.Value.packets [lastPacketIndex].Data [0].ToString ())); //First data value
-
+				//UnityEngine.Debug.Log (String.Format ("SERVER: {0} ADDRESS: <{1}> VALUE : {2}", 
+				//	                                    item.Key, // Server name
+				///	                                    item.Value.packets [lastPacketIndex].Address, // OSC address
+				//	                                    item.Value.packets [lastPacketIndex].Data[1].ToString ())); //First data value
+				//
+				if(item.Value.packets [lastPacketIndex].Data.Count>0){
+					UnityEngine.Debug.Log (String.Format ("ADDRESS: <{0}> VALUE : {1}", item.Value.packets [lastPacketIndex].Address, item.Value.packets [lastPacketIndex].Data[0].ToString ()));
+					if(item.Value.packets [lastPacketIndex].Address.Equals("/temp")){
+						tempVal = item.Value.packets [lastPacketIndex].Data[0].ToString();
+					}
+					if(item.Value.packets [lastPacketIndex].Address.Equals("/light")){
+						lightVal = item.Value.packets [lastPacketIndex].Data[0].ToString();
+						rend.material.color = new Color (Convert.ToInt32(lightVal), 0, 0);
+					}
+					if(item.Value.packets [lastPacketIndex].Address.Equals("/motion")){
+						pirVal = item.Value.packets [lastPacketIndex].Data[0].ToString();
+					}
+				}
 			}
 		}
 	}
