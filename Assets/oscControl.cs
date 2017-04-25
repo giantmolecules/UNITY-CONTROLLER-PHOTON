@@ -73,7 +73,7 @@ public class oscControl : MonoBehaviour {
 					}
 					if(item.Value.packets [lastPacketIndex].Address.Equals("/light")){
 						lightVal = item.Value.packets [lastPacketIndex].Data[0].ToString();
-						rend.material.color = new Color (Convert.ToInt32(lightVal), 0, 0);
+						rend.material.color = new Color ((Convert.ToInt32(lightVal)/255f), 0, 0);
 					}
 					if(item.Value.packets [lastPacketIndex].Address.Equals("/motion")){
 						pirVal = item.Value.packets [lastPacketIndex].Data[0].ToString();
