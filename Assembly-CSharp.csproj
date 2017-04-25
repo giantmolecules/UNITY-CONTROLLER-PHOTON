@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CallPhotonFunction.cs" />
      <Compile Include="Assets\OSCBundle.cs" />
      <Compile Include="Assets\OSCClient.cs" />
      <Compile Include="Assets\OSCHandler.cs" />
